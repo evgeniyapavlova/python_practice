@@ -13,3 +13,9 @@ Output: 13
 
 text = ('She sells sea shells on the sea shore The shells that she sells are sea shells I\'m sure So if she sells sea '
         'shells on the sea shore I\'m sure that the shells are sea shore shells')
+
+# text = text.upper().replace('.', '')
+# words_list = set(text.split())
+# print(len(words_list))
+
+print(len(set(text.upper().replace('.', '').split())))
