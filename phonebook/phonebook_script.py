@@ -52,6 +52,29 @@ def print_contact():
     with open(file_path, "r", encoding="utf-8") as file:
         print(file.read())
 
+def copy_contact():
+    print("Here is all contacts: ")
+    with open(file_path, "r", encoding="utf-8") as file:
+        data = file.read()
+        
+        contacts_list_enumerated = list(enumerate(data.rstrip().split('\n\n')))
+        
+        for contact in contacts_list_enumerated:
+            print(f"ID: {contact[0]+1}\n{contact[1]}\n")
+            
+        id_to_copy = int(input('Input ID of the contact you want to copy: '))
+        print()
+        
+        while id_to_copy not in range(len(contacts_list_enumerated) + 1):
+            id_to_copy = int(input('ID is out of range.\nPlease input ID of the contact you want to copy once again: '))
+        
+        contact_to_copy = contacts_list_enumerated[id_to_copy-1][1]
+        contact_to_copy_surname = contact_to_copy.split()[0].lower()
+        new_file_name= f"phonebook/{contact_to_copy_surname}.txt"
+
+        with open(new_file_name, "a", encoding="utf-8") as file:
+            file.write(contact_to_copy)
+        print()
 
 def search_contact():
     print(
@@ -87,17 +110,18 @@ def interface():
         pass
 
     var = 0
-    while var != "4":
+    while var != "5":
         print(
             "Options: \n",
             "1. Add contact\n",
             "2. Print contacts\n",
             "3. Search contact\n",
-            "4. Exit",
+            "4. Copy contact\n",
+            "5. Exit",
         )
         print()
         var = input("Select an option: ")
-        while var not in ("1", "2", "3", "4"):
+        while var not in ("1", "2", "3", "4", "5"):
             print("Incorrect input")
             var = input("Select an option: ")
         print()
@@ -109,10 +133,11 @@ def interface():
                 print_contact()
             case "3":
                 search_contact()
-            case "4":
+            case "4":                
+                copy_contact()
+            case "5":
                 print("Good bye!")
-
-        return
+       
 
 
 if __name__ == "__main__":
